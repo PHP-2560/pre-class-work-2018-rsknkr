@@ -60,15 +60,26 @@ plot(exp.draws.1)
 plot(exp.draws.0.2, exp.draws.10)
 ```
 
-
-
-
 4. We'd now like to compare the properties of each of our vectors. Begin by creating a vector of the means of each of our five distributions in the order we created them and saving this to a variable name of your choice. Using this and other similar vectors, create the following scatterplots and explain in words what is going on:
     a. The five means versus the five rates used to generate the distribution.
     b. The standard deviations versus the rates.
     c. The means versus the standard deviations.
 
 For each plot, explain in words what's going on.
+
+
+```{r}
+means <- c(mean(rexp(n=200)), mean(rexp(n=200, rate=0.2)), 
+          mean(rexp(n=200, rate=5)), mean(rexp(n=200, rate=7.3)), 
+          mean(rexp(n=200, rate=10)))
+
+plot(means, c(1, 0.2, 5, 7.3, 10))
+
+plot(c(sd(exp.draws.1), sd(exp.draws.0.2), sd(exp.draws.5), sd(exp.draws.7.3), sd(exp.draws.10)), 
+    c(1, 0.2, 5, 7.3, 10))
+
+plot(means, c(sd(exp.draws.1), sd(exp.draws.0.2), sd(exp.draws.5), sd(exp.draws.7.3), sd(exp.draws.10)))
+```
 
 ### Part II (PHP 2560 Only)
 
