@@ -26,9 +26,28 @@ sd(exp.draws.1, na.rm = TRUE)
 
 ```
 
-
-
 2. Repeat, but change the rate to 0.2, 5, 7.3 and 10, storing the results in vectors called  `exp.draws.0.2`,  `exp.draws.5`,  `exp.draws.7.3` and  `exp.draws.10`. 
+
+
+```{r}
+exp.draws.0.2 <- c(rexp(n=200, rate=0.2))
+mean(exp.draws.0.2)
+sd(exp.draws.0.2, na.rm = TRUE)
+
+exp.draws.5 <- c(rexp(n=200, rate=5))
+mean(exp.draws.5)
+sd(exp.draws.5, na.rm = TRUE)
+
+exp.draws.7.3 <- c(rexp(n=200, rate=7.3))
+mean(exp.draws.7.3)
+sd(exp.draws.7.3, na.rm = TRUE)
+
+exp.draws.10 <- c(rexp(n=200, rate=10))
+mean(exp.draws.10)
+sd(exp.draws.10, na.rm = TRUE)
+
+```
+
 
 3. The function `plot()` is the generic function in R for the visual display of data. `hist()` is a function that takes in and bins data as a side effect. To use this function, we must first specify what we'd like to plot.
     a. Use the `hist()` function to produce a histogram of your standard exponential distribution. 
