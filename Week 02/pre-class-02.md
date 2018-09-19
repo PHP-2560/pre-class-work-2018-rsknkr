@@ -19,6 +19,14 @@ then this results in 10 exponentially distributed numbers with a rate \(\lambda=
 
 
 1. Generate 200 random values from the standard exponential distribution and store them in a vector `exp.draws.1`.  Find the mean and standard deviation of `exp.draws.1`.
+```{r}
+exp.draws.1 <- c(rexp(n=200))
+mean(exp.draws.1)
+sd(exp.draws.1, na.rm = TRUE)
+
+```
+
+
 
 2. Repeat, but change the rate to 0.2, 5, 7.3 and 10, storing the results in vectors called  `exp.draws.0.2`,  `exp.draws.5`,  `exp.draws.7.3` and  `exp.draws.10`. 
 
