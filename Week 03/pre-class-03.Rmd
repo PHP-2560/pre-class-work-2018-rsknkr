@@ -10,5 +10,6 @@ install.packages("gapminder")
 library(dplyr)
 library(gapminder)
 gm <- gapminder
-#just checking if commit-push stuff works 
+
+
 ```
