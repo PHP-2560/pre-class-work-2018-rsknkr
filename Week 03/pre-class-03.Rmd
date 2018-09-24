@@ -11,5 +11,5 @@ library(dplyr)
 library(gapminder)
 gm <- gapminder
 
-
+head(gm)
 ```
