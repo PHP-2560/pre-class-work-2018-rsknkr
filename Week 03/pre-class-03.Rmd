@@ -34,7 +34,10 @@ gm %>%
 3. According to the data available, what was the average life expectancy across each continent in the 1980s?
 
 ```{r}
-
+gm %>%
+  filter(year >= 1980 & year <= 1989 ) %>%
+  group_by(continent) %>%
+  summarize(avg_lifeExp = mean(lifeExp))
 ```
 
 4. What 5 countries have the highest total GDP over all years combined?
