@@ -43,7 +43,11 @@ gm %>%
 4. What 5 countries have the highest total GDP over all years combined?
 
 ```{r}
-
+gm %>%
+  group_by(country) %>%
+  summarize(total_gdp_over_all_years = sum(gdpPercap*pop)) %>%
+  arrange(desc(total_gdp_over_all_years))%>%
+  head(n=5) 
 ```
 
 5. What countries and years had life expectancies of at least 80 years? N.b. only output the columns of interest: country, life expectancy and year (in that order).
