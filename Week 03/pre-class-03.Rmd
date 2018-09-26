@@ -101,7 +101,14 @@ typeof(gm1992)
 
 ```{r}
 gm %>%
-  group_by(country) %>% 
+  select(country, year, pop, lifeExp) %>%
+  group_by(country) %>%
+  mutate(lifeExp_delta = lifeExp - lag(lifeExp)) %>% 
+  mutate(pop_delta = pop - lag(pop))%>%
+  filter(pop < lag(pop)) %>%
+  filter(lifeExp > lag(lifeExp))
+
+
   
 ```
 
