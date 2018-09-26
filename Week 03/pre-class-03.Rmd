@@ -53,7 +53,10 @@ gm %>%
 5. What countries and years had life expectancies of at least 80 years? N.b. only output the columns of interest: country, life expectancy and year (in that order).
 
 ```{r}
-
+gm %>%
+  group_by(country, year) %>%
+  filter (lifeExp >= 80) %>%
+  select(country, lifeExp, year)
 ```
 
 6. What 10 countries have the strongest correlation (in either direction) between life expectancy and per capita GDP?
