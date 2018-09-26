@@ -62,7 +62,11 @@ gm %>%
 6. What 10 countries have the strongest correlation (in either direction) between life expectancy and per capita GDP?
 
 ```{r}
-
+gm %>%
+  group_by(country) %>%
+  summarize(corr = cor(lifeExp, gdpPercap))%>%
+  arrange(desc(corr))%>%
+  head(10)
 ```
 
 7. Which combinations of continent (besides Asia) and year have the highest average population across all countries? N.b. your output should include all results sorted by highest average population. With what you already know, this one may stump you. See this Q&A for how to ungroup before arrangeing. This also behaves differently in more recent versions of dplyr.
