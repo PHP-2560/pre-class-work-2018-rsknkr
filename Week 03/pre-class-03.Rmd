@@ -101,7 +101,7 @@ typeof(gm1992)
 
 ```{r}
 gm %>%
-  group_by(country) %>%
+  group_by(country) %>% 
   
 ```
 
