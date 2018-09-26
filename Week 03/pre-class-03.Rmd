@@ -82,7 +82,11 @@ gm %>%
 8. Which three countries have had the most consistent population estimates (i.e. lowest standard deviation) across the years of available data?
 
 ```{r}
-
+gm %>%
+  group_by(country) %>%
+  summarize(SD = sd(pop)) %>%
+  arrange(SD) %>%
+  head(3)
 ```
 
 9. Subset gm to only include observations from 1992 and store the results as gm1992. What kind of object is this?
