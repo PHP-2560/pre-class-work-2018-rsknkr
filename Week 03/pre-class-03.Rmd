@@ -24,7 +24,11 @@ gm %>%
 2. Which European nation had the lowest GDP per capita in 1997?
 
 ```{r}
-
+gm %>%
+  filter(continent == "Europe", year == "1997") %>%
+  arrange(gdpPercap) %>%
+  select(country) %>%
+  head(n=1)
 ```
 
 3. According to the data available, what was the average life expectancy across each continent in the 1980s?
