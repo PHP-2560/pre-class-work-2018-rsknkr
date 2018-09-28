@@ -20,21 +20,24 @@ for (i in 1:50) {print(i)}
 A.  Using a loop, add all the integers between 0 and 1000.
 ```{r}
 ##Now let's add all integers from 0 to 1000
-sum <- 0
-for (i in 0:1000) {sum <- sum + i}
+sumAll <- 0
+for (i in 0:1000) {sumAll <- sumAll + i}
 ```
 
 B. Now, add all the EVEN integers between 0 and 1000 (hint: use seq())
 ```{r}
 ##Now let's add all EVEN integers from 0 to 1000
-sum <- 0
-for (i in seq(0,1000)) {
-  if (!i %% 2) {
-    sum <- sum + i}
-}
+sumEven <- 0
+for (i in seq(from = 0, to = 1000, by = 2)) {sumEven <- sumEven + i}
 ```
 
 C. Now, repeat A and B WITHOUT using a loop.
+```{r}
+##No loop this time
+sumAll <- sum(seq(0,1000))
+sumEven <- sum(seq(from = 0, to = 1000, by = 2))
+```
+
 
 ### Question 3:
 
