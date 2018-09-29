@@ -59,9 +59,8 @@ The response to each question should be an integer between 1 and 5. Obviously, w
 A. Using a loop, create a new dataframe called survey.clean where all the invalid values (those that are not integers between 1 and 5) are set to NA.
 ```{r}
 survey.clean <- survey
-question <- c("q1", "q2", "q3", "q4", "q5")
-for (q in question) {
-  for (r in 1:5) {
+for (q in 2 : ncol(survey.clean)) {
+  for (r in 1 : nrow(survey.clean)) {
     if (survey.clean[r,q] < 1 | survey.clean[r,q] > 5) {survey.clean[r,q] = NA}
   }
 }
@@ -74,11 +73,10 @@ B. Now, again using a loop, add a new column to the dataframe called “invalid.
 survey.clean <- survey
 survey.clean$invalid.answers <- c(0,0,0,0,0,0)
 
-question <- c("q1", "q2", "q3", "q4", "q5")
-
 #double loop: for columns (q) and then for rows (r)
-for (q in question) {
-  for (r in 1:5) {
+
+for (q in 2 : (ncol(survey.clean) - 1) ) {
+  for (r in 1 : nrow(survey.clean) ) {
     if (survey.clean[r,q] < 1 | survey.clean[r,q] > 5) {
       survey.clean[r,q] <- NA
       survey.clean[r,"invalid.answers"] <- survey.clean[r,"invalid.answers"] + 1
