@@ -62,7 +62,7 @@ survey.clean <- survey
 question <- c("q1", "q2", "q3", "q4", "q5")
 for (q in question) {
   for (r in 1:5) {
-    if (survey.clean[r,q] < 1 | survey.clean[r,q] > 5) {survey.clean[r,q] = NA}
+    if (survey.clean[r,q] < 1 | survey.clean[r,q] > 5) {survey.clean[r,q] = NA} 
   }
 }
 survey.clean
