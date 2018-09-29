@@ -70,3 +70,22 @@ survey.clean
 ```
 
 B. Now, again using a loop, add a new column to the dataframe called “invalid.answers” that indicates, for each participant, how many bad answers they gave.
+```{r}
+survey.clean <- survey
+survey.clean$invalid.answers <- c(0,0,0,0,0,0)
+
+question <- c("q1", "q2", "q3", "q4", "q5")
+
+#double loop: for columns (q) and then for rows (r)
+for (q in question) {
+  for (r in 1:5) {
+    if (survey.clean[r,q] < 1 | survey.clean[r,q] > 5) {
+      survey.clean[r,q] <- NA
+      survey.clean[r,"invalid.answers"] <- survey.clean[r,"invalid.answers"] + 1
+      
+            }
+  }
+}
+survey.clean
+
+```
