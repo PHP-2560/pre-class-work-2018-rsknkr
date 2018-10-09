@@ -130,27 +130,6 @@ cat("Mean =", round(mean(WCGS.new[,i], na.rm=TRUE)), "sd =", sd(WCGS.new[,i], na
 
 ```
 
-```{r}
-c <- c(1,2,3,NA)
-st <- function(x){
-  out <- (x-mean(x, na.rm=TRUE))/sd(x, na.rm=TRUE)
-  return(out)
-}
-
-for (i in 1:length(c)) {
-  c.new <- standardize_me(c)
-}
-
-c.new
-
-#Printing mean and sd of standardized variables in wcgs.new
-for (i in 1:length(c.new)) {
-cat("Mean", mean(x=c.new[i], na.rm=TRUE), "sd =", sd(c.new[i], na.rm=TRUE), "\n")
-}
-
-
-```
-
 ### Question 2: Looping to Calculate
 
 A. Using a loop, calculate the mean weight of the subjects separated by the type of CHD they have.
