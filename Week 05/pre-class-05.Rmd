@@ -99,9 +99,57 @@ A. Create a function called standardize.me() that takes a numeric vector as an a
 B. Assign all the numeric columns of the original WCGS dataset to a new dataset called WCGS.new.
 C. Using a loop and your new function, standardize all the variables WCGS.new dataset.
 D. What should the mean and standard deviation of all your new standardized variables be? Test your prediction by running a loop
+```{r}
+#function that returns a standardized version of a numeric vector
+standardize_me <- function(x){
+  out <- (x - mean(x, na.rm=TRUE)) / sd(x, na.rm=TRUE)
+  return(out)
+}
+  
+#New dataframe with only numeric columns from wcgs
+
+library(dplyr)
+
+WCGS.new<-
+  wcgs %>% 
+  select(age,height,weight,sbp,dbp,chol,ncigs,bmi)
+
+#Using function standardize_me() to standardize all columns in wcgs.new
+for (i in 1:ncol(WCGS.new)) {
+  WCGS.new[,i] <- standardize_me(WCGS.new[,i])
+}
 
 
+# Printing mean and sd of standardized variables in wcgs.new
+# Mean should be 0, sd should be 1 by definition of standardization
+# Without rounding mean will we close to zero, but not exactly zero due to a rounding mistake
+for (i in 1:ncol(WCGS.new)) {
+cat("Mean =", round(mean(WCGS.new[,i], na.rm=TRUE)), "sd =", sd(WCGS.new[,i], na.rm=TRUE), "\n")
+}
 
+
+```
+
+```{r}
+c <- c(1,2,3,NA)
+st <- function(x){
+  out <- (x-mean(x, na.rm=TRUE))/sd(x, na.rm=TRUE)
+  return(out)
+}
+
+for (i in 1:length(c)) {
+  c.new <- standardize_me(c)
+}
+
+c.new
+
+#Printing mean and sd of standardized variables in wcgs.new
+for (i in 1:length(c.new)) {
+cat("Mean", mean(x=c.new[i], na.rm=TRUE), "sd =", sd(c.new[i], na.rm=TRUE), "\n")
+}
+
+
+```
 
 ### Question 2: Looping to Calculate
 
