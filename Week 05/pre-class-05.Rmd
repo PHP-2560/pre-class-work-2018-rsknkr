@@ -135,22 +135,24 @@ cat("Mean =", round(mean(WCGS.new[,i], na.rm=TRUE)), "sd =", sd(WCGS.new[,i], na
 A. Using a loop, calculate the mean weight of the subjects separated by the type of CHD they have.
 ```{r}
 # using for loops to calculate mean weight by CHD type
-type_CHD <- c("no CHD", "MI or SD", "silent MI", "angina")
-mean_weight <- c(0,0,0,0)
+
+mean_weight <- rep(0,4)
+num_subj <- rep(0,4)
+
+CHD_weight <- data.frame(mean_weight, num_subj)
+rownames(CHD_weight) <- c("no CHD", "MI or SD", "silent MI", "angina")
+
 
 for (r in 1:nrow(wcgs)) {
-  for (i in 1:4){
-    if (wcgs[r,"typchd69"] == type_CHD[i]){  #matching CHD type from wcgs to one in vector type_CHD
-      if (mean_weight[i]==0){
-        mean_weight[i] <- wcgs[r,"weight"]
-      } else{
-        mean_weight[i] <- mean(x = c(wcgs[r,"weight"], mean_weight[i]), na.rm=TRUE)
-      }
-    }
-  }
-}  
+  type <- as.character(wcgs[r,"typchd69"])
+  CHD_weight[type, "num_subj"] <- CHD_weight[type, "num_subj"] + 1
+  
+  CHD_weight[type, "mean_weight"] <-  (CHD_weight[type, "mean_weight"]*(CHD_weight[type,"num_subj"]-1) 
+                                      + wcgs[r,"weight"]) / CHD_weight[type, "num_subj"] 
+                                      #counting the moving mean
+}
 
-data.frame(type_CHD,mean_weight)
+CHD_weight
 
 ```
 B. Now do the same thing, but now don’t use a loop
