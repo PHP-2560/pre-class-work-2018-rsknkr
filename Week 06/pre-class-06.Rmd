@@ -47,7 +47,16 @@ repl_vec <- function(x, y) {
 ```
 
 3. Use `lapply()` and an anonymous function to find the coefficient of variation (the standard deviation divided by the mean) for all columns in the mtcars dataset. 
+```{r}
+
+lapply(mtcars, function (x) sd(x, na.rm=TRUE)/mean(x, na.rm=TRUE))
+
+```
 
 4. Use vapply() to:
     a. Compute the standard deviation of every column in a numeric data frame.
     b. Compute the standard deviation of every numeric column in a mixed data frame. (Hint: you’ll need to use vapply() twice.)
+```{r}
+vapply(mtcars, sd, numeric(1))
+vapply(iris[vapply(iris, is.numeric, logical(1))], sd, numeric(1))
+```
