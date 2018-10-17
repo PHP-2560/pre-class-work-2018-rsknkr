@@ -41,7 +41,10 @@ repl_vec <- function(x, y) {
 ```
 
 2. Compare and contrast rnorm() and MASS::mvrnorm(). How could you make them more consistent?
-
+```{r}
+# rnorm(n, mean = , sd = ) is used to generate n random numbers from normal distribution; uses the standard deviation for the spread
+# mvrnorm(n = 1, mu, Sigma, tol = 1e-6, empirical = FALSE, EISPACK = FALSE) produces n samples from the specified multivariate normal distribution; uses the variance-covariance matrix for the spread
+```
 
 3. Use `lapply()` and an anonymous function to find the coefficient of variation (the standard deviation divided by the mean) for all columns in the mtcars dataset. 
 
