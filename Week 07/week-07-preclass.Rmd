@@ -34,13 +34,12 @@ With this project we will simulate a famoues probability problem. This will not 
 ```{r}
 
 trials_to_bust <- function (bankroll, num_bets, p) {
-  # create an empty vector which will contain the amounts of money gambler has after each bet 
-  sum <- c(NA, length=num_bets)
+  # create a vector which will contain the amounts of money gambler has after each bet 
   # set the first element of this vector equal to the bankroll
-  sum[1] <- bankroll
+  sum <- c(bankroll)
   
   # simulating a sequence of bets
-  for (bet in 2:num_bets) {
+  for (bet in 2:(num_bets+1)) {
     if (sum[bet-1]!=0){
       # +100 if rbinom(...) equals to 1, -100 if it equals to 0
       sum[bet] <- sum[bet-1] - 100*(-1)^rbinom(1, size=1, prob=p) 
@@ -55,16 +54,29 @@ trials_to_bust <- function (bankroll, num_bets, p) {
 }
 
 iterations <- 5000
+bets <- 100
 # vector containing results from all iterations of trials_to_bust
-simulation <- replicate(iterations, trials_to_bust(1000,100,0.5))
+simulation <- replicate(iterations, trials_to_bust(1000,bets,0.5))
 
 # simulation[simulation<100] - all simulations where the gambler got busted before 100th bet
 # proportion to the total number of iterations
-Pr_get_busted <- length(simulation[simulation<100])/iterations
+Pr_get_busted <- length(simulation[simulation<=bets])/iterations
 
 Pr_get_busted
 ```
     b. the probability that you have busted by the time you have placed your five hundredth bet by simulating the outcome directly. 
+```{r}
+iterations <- 5000
+bets <- 500
+# vector containing results from all iterations of trials_to_bust
+simulation <- replicate(iterations, trials_to_bust(1000,bets,0.5))
+
+# simulation[simulation<100] - all simulations where the gambler got busted before 500th bet
+# proportion to the total number of iterations
+Pr_get_busted <- length(simulation[simulation<=bets])/iterations
+
+Pr_get_busted
+```
     c. the mean time you go bust, given that you go bust within the first 5000 hands.
     d. the mean and variance of your bankroll after 100 hands (including busts).
     e. the mean and variance of your bankroll after 500 hands (including busts).
