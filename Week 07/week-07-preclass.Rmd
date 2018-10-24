@@ -99,8 +99,8 @@ simulation <- replicate(iterations, trials_to_bust(1000,hands,0.5)["bankroll"])
 
 # simulation[simulation<100] - all simulations where the gambler got busted before 100th bet
 # proportion to the total number of iterations
-mean(simulation[simulation<=hands])
-var(simulation[simulation<=hands])
+mean(simulation)
+var(simulation)
 ```
     e. the mean and variance of your bankroll after 500 hands (including busts).
 ```{r}
@@ -111,8 +111,8 @@ simulation <- replicate(iterations, trials_to_bust(1000,hands,0.5)["bankroll"])
 
 # simulation[simulation<100] - all simulations where the gambler got busted before 100th bet
 # proportion to the total number of iterations
-mean(simulation[simulation<=hands])
-var(simulation[simulation<=hands])
+mean(simulation)
+var(simulation)
 ``` 
 Note: you *must* stop playing if your player has gone bust. How will you handle this in the `for` loop?
 
