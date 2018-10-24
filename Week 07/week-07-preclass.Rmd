@@ -50,37 +50,70 @@ trials_to_bust <- function (bankroll, num_bets, p) {
   }
   
   # return the number of step where the gambler lost all money or 100 (if he still has money)
-  return(bet)
+  return(c(bet=bet, bankroll=sum[bet-1]))
 }
 
 iterations <- 5000
-bets <- 100
-# vector containing results from all iterations of trials_to_bust
-simulation <- replicate(iterations, trials_to_bust(1000,bets,0.5))
+hands <- 100
+# vector containing results from all iterations of trials_to_bust (number of bet)
+simulation <- replicate(iterations, trials_to_bust(1000,hands,0.5)["bet"])
 
 # simulation[simulation<100] - all simulations where the gambler got busted before 100th bet
 # proportion to the total number of iterations
-Pr_get_busted <- length(simulation[simulation<=bets])/iterations
+Pr_get_busted <- length(simulation[simulation<=hands])/iterations
 
 Pr_get_busted
 ```
     b. the probability that you have busted by the time you have placed your five hundredth bet by simulating the outcome directly. 
 ```{r}
 iterations <- 5000
-bets <- 500
-# vector containing results from all iterations of trials_to_bust
-simulation <- replicate(iterations, trials_to_bust(1000,bets,0.5))
+hands <- 500
+# vector containing results from all iterations of trials_to_bust (number of bet)
+simulation <- replicate(iterations, trials_to_bust(1000,hands,0.5)["bet"])
 
 # simulation[simulation<100] - all simulations where the gambler got busted before 500th bet
 # proportion to the total number of iterations
-Pr_get_busted <- length(simulation[simulation<=bets])/iterations
+Pr_get_busted <- length(simulation[simulation<=hands])/iterations
 
 Pr_get_busted
 ```
     c. the mean time you go bust, given that you go bust within the first 5000 hands.
+```{r}
+iterations <- 5000
+hands <- 5000
+# vector containing results from all iterations of trials_to_bust (number of bet)
+simulation <- replicate(iterations, trials_to_bust(1000,hands,0.5)["bet"])
+
+# simulation[simulation<100] - all simulations where the gambler got busted before 100th bet
+# proportion to the total number of iterations
+mean_time_bust <- mean(simulation[simulation<=hands])
+
+mean_time_bust
+```
     d. the mean and variance of your bankroll after 100 hands (including busts).
+```{r}
+iterations <- 5000
+hands <- 100
+# vector containing results from all iterations of trials_to_bust (bankrolls)
+simulation <- replicate(iterations, trials_to_bust(1000,hands,0.5)["bankroll"])
+
+# simulation[simulation<100] - all simulations where the gambler got busted before 100th bet
+# proportion to the total number of iterations
+mean(simulation[simulation<=hands])
+var(simulation[simulation<=hands])
+```
     e. the mean and variance of your bankroll after 500 hands (including busts).
- 
+```{r}
+iterations <- 5000
+hands <- 500
+# vector containing results from all iterations of trials_to_bust (bankrolls)
+simulation <- replicate(iterations, trials_to_bust(1000,hands,0.5)["bankroll"])
+
+# simulation[simulation<100] - all simulations where the gambler got busted before 100th bet
+# proportion to the total number of iterations
+mean(simulation[simulation<=hands])
+var(simulation[simulation<=hands])
+``` 
 Note: you *must* stop playing if your player has gone bust. How will you handle this in the `for` loop?
 
 2. **Markov Chains**. Suppose you have a game where the probability of winning on your first hand is 48%; each time you win, that probability goes up by one percentage point for the next game (to a maximum of 100%, where it must stay), and each time you lose, it goes back down to 48%. Assume you cannot go bust and that the size of your wager is a constant $100.
