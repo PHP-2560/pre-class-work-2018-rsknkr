@@ -1,0 +1,170 @@
+## Stage 2
+For this stage, I have created an RStudio Server for all of you to use. You can access this server:
+
+rstudio.sullivanstatistics.com
+For sign in:
+
+**Username**: rsknkr
+**Password***: everyone has the same password: password
+
+For the setup of this, I have created a database called titanic. The goal will be to use this lab to work on the titanic dataset. The code below will let you connect to the database. Create a Markdown with the following code and work through the lab.
+```{r}
+library(RMySQL)
+con <- dbConnect(MySQL(),
+                 user = 'trial',
+                 password = 'password',
+                 host = '127.0.0.1',
+                 dbname='titanic')
+
+```
+We can run any of these commands as follow:
+```{r}
+query <- "show tables;" # This will be your SQL command
+dbGetQuery(con, query) # This sends the command to the SQL server
+```  
+1. What tables are in this database?
+**There are tables names of which start with "titanic" (all tables created by students ever enrolled in PHP2560, I suppose) and also tables "attempt" and "table_borg"**
+
+2. Load the titanic data:
+```{r}
+titanic <- read.table("/home/php2560/titanic.csv", header=TRUE, sep=",")
+```
+3. Create a table in MySQL from this data. Name it titanic_raskina:
+
+```{r, eval=FALSE}
+dbWriteTable(con, "titanic_raskina", titanic)
+```
+
+Now what tables are in this database?
+
+```{r}
+con2 <- dbConnect(MySQL(),
+                 user = 'trial',
+                 password = 'password',
+                 host = '127.0.0.1',
+                 dbname='titanic')
+query <- "show tables;" # This will be your SQL command
+dbGetQuery(con2, query)
+```
+**There's one more table (titanic_raskina) in this database now**
+
+### Basic usage of commands
+
+We will start to use a list of commands that would be commonly used in MySQL:
+
+These are:
+
+- show tables;
+- describe titanic_yourlastname;
+- select name, pclass, age, sex from titanic limit 10;
+
+Try these commands and test this out. 
+
+
+### R and MySQL
+
+5. Run the following SQL command. Before doing so describe what this is asking
+```{r}
+# This command selects columns pclass and survived from my table and also creates a column avg_age, where the average age of those who survived or didn't survive in each class is shown
+
+query <- "SELECT pclass, survived, avg(age) AS avg_age FROM titanic_raskina   
+   GROUP BY pclass, survived"
+dbGetQuery(con2, query)
+
+```
+
+
+6.  Run the following SQL command. Before doing so describe what this is asking
+```{r}
+# This command selects columns pclass and survived from my table and also creates a column avg_age, where the average age of only those who survived in each class is shown
+
+query <- "select pclass, survived, avg(age) as avg_age from titanic_raskina
+   where survived=1
+   group by pclass, survived"
+dbGetQuery(con2, query)
+
+```
+
+
+7. Run the following SQL command. Before doing so describe what this is asking
+```{r}
+# This command selects columns name, pclass, survived and age from my table for those passengers whose full name matches the pattern '^.sen.+' (contains parts which start with ".sen", where "." is  single character, and have at least 1 character after this pattern)
+
+query <- "select name, pclass, survived, age from titanic_raskina 
+   where name regexp '^.sen.+'"
+dbGetQuery(con2, query)
+
+```
+
+8. Run the following SQL command. Before doing so describe what this is asking
+```{r}
+# This command selects columns name, pclass, survived and age from my table for those passengers whose full name matches the pattern 'Jakob.*$' (ends with "Jakob" and may or may not have characters after this pattern)
+
+query <- "select name, pclass, survived, age from titanic_raskina 
+   where name regexp 'Jakob.*$'"
+dbGetQuery(con2, query)
+
+```
+
+9.  Run the following SQL commands. What is different about them? What do they return?
+```{r}
+# This command selects columns name, pclass, survived and age from my table for those passengers whose full name matches the pattern 'Ivar.*$' (ends with "Ivar" and may or may not have characters after this pattern)
+
+
+query <- "select name, pclass, survived, age from titanic_raskina 
+   where name regexp 'Ivar.*$'"
+dbGetQuery(con2, query)
+```
+   
+```{r}
+# This command selects columns name, pclass, survived and age from my table for those passengers whose first name matches the pattern 'Ivar.*$' (ends with "Ivar" and may or may not have characters after this pattern)
+
+# The result will not contain those rows from the previous command where "Ivar.*$" is located before the comma (in other words, where this pattern is a part of a last name)
+
+query <- "select name, pclass, survived, age from titanic_raskina 
+   where name regexp ',.*Ivar.*$'"
+dbGetQuery(con2, query)
+```
+
+
+10. We can also plot data from this:
+```{r}
+myQuery <- "select pclass, avg(fare) as avg_fare from titanic_raskina
+              group by pclass"
+myData <- dbGetQuery(con, myQuery)
+library(ggplot2)
+ggplot(myData, aes(pclass, avg_fare)) + geom_bar(stat="identity")
+```
+
+
+
+### More challenging
+
+11. Create a data frame with:
+- `pclass`
+- `sex`
+- `age`
+- `fare`
+- `survived`
+- `parch`
+Only for people who did not survive. 
+
+```{r}
+query <- "select pclass, sex, age, fare, survived, parch from titanic_raskina where survived = 0"
+dbGetQuery(con2, query)
+
+```
+
+12. Create a graph of the average survival over the different classes. Make two distinct lines for male and female passengers. Create this plot using ggplot. 
+```{r}
+myQuery <- "select pclass, sex, avg(survived) as average_survival from titanic_raskina
+              group by pclass, sex"
+myData <- dbGetQuery(con2, myQuery)
+
+library(ggplot2)
+ggplot(myData, aes(x=pclass, y=average_survival, color=sex)) + scale_x_discrete(limits=c("1","2","3")) + geom_line()
+
+```
+
+
+
