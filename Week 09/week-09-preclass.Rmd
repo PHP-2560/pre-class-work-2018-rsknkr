@@ -78,4 +78,7 @@ html_attrs(html_nodes(webpage, ".wsod_disclaimer > span"))
 ```
 9. Extract the values of the blue percentage-bars from the “Trending Tickers” table (bottom right of the web page.)
 Hint: in this case, the values are stored under the “class” attribute.
+```{r}
+html_attr(html_nodes(webpage, ".scale div"), "class")
+```
 10. Get the links of all of the “svg” images on the web page.
