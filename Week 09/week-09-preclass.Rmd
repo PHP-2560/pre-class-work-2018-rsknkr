@@ -19,10 +19,31 @@ options(scipen = 3, digits = 3)
 
 
 ## Exercises
-
+```{r}
+library(rvest)
+library(httr)
+library(XML)
+```
 1. Read the HTML content of the following URL with a variable called webpage: https://money.cnn.com/data/us_markets/ At this point, it will also be useful to open this web page in your browser.
+```{r}
+#rvest package
+url <- "https://money.cnn.com/data/us_markets/"
+webpage <- read_html(url)
+#webpage
+
+```
 2. Get the session details (status, type, size) of the above mentioned URL.
+```{r}
+# httr package
+session <- GET(url)
+```
 3. Extract all of the sector names from the “Stock Sectors” table (bottom left of the web page.)
+```{r}
+# inspected the webpage and copied the xpath of the node
+
+sector_names <- html_table(html_nodes(webpage, xpath = '//*[@id="wsod_sectorPerformance"]/table'))[[1]][1]
+
+```
 4. Extract all of the “3 Month % Change” values from the “Stock Sectors” table.
 5. Extract the table “What’s Moving” (top middle of the web page) into a data-frame.
 6. Re-construct all of the links from the first column of the “What’s Moving” table.
