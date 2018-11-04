@@ -56,11 +56,16 @@ month_change <- html_table(html_nodes(webpage, xpath = '//*[@id="wsod_sectorPerf
 5. Extract the table “What’s Moving” (top middle of the web page) into a data-frame.
 ```{r}
 #building table with xml
-WM_node <- getNodeSet(htmlParse(webpage, asText = TRUE), '//*[@id="wsod_whatsMoving"]')
+WM_node <- getNodeSet(html_nodes(webpage, xpath = '//*[@id="wsod_whatsMoving"]'))
 readHTMLTable(WM_node[[1]])
 ```
 6. Re-construct all of the links from the first column of the “What’s Moving” table.
 Hint: the base URL is “https://money.cnn.com”
+```{r}
+#using css, not xpath 
+links_nodes <- html_nodes(webpage, css="td .wsod_symbol")
+paste("https://money.cnn.com", html_attr(links_nodes, "href"))
+```
 7. Extract the titles under the “Latest News” section (bottom middle of the web page.)
 8. To understand the structure of the data in a web page, it is often useful to know what the underlying attributes are of the text you see.
 Extract the attributes (and their values) of the HTML element that holds the timestamp underneath the “What’s Moving” table.
