@@ -82,3 +82,6 @@ Hint: in this case, the values are stored under the “class” attribute.
 html_attr(html_nodes(webpage, ".scale div"), "class")
 ```
 10. Get the links of all of the “svg” images on the web page.
+```{r}
+html_attr(html_nodes(webpage, "img[src$='svg']"), "src")
+```
