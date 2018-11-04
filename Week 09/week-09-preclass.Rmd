@@ -40,12 +40,25 @@ session <- GET(url)
 3. Extract all of the sector names from the “Stock Sectors” table (bottom left of the web page.)
 ```{r}
 # inspected the webpage and copied the xpath of the node
+# building table with rvest
 
 sector_names <- html_table(html_nodes(webpage, xpath = '//*[@id="wsod_sectorPerformance"]/table'))[[1]][1]
 
 ```
 4. Extract all of the “3 Month % Change” values from the “Stock Sectors” table.
+```{r}
+# inspected the webpage and copied the xpath of the node
+# building table with rvest
+
+month_change <- html_table(html_nodes(webpage, xpath = '//*[@id="wsod_sectorPerformance"]/table'))[[1]][2]
+
+```
 5. Extract the table “What’s Moving” (top middle of the web page) into a data-frame.
+```{r}
+#building table with xml
+WM_node <- getNodeSet(htmlParse(webpage, asText = TRUE), '//*[@id="wsod_whatsMoving"]')
+readHTMLTable(WM_node[[1]])
+```
 6. Re-construct all of the links from the first column of the “What’s Moving” table.
 Hint: the base URL is “https://money.cnn.com”
 7. Extract the titles under the “Latest News” section (bottom middle of the web page.)
